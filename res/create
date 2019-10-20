@@ -1,0 +1,69 @@
+#!/bin/bash
+
+echo "> Enter Project name:"
+read NAME
+
+if [ -z "$NAME" ]; then
+    echo "Project name is mandatory!"
+    exit 1
+fi
+if [ -d "$NAME" ]; then
+    echo "A folder named '$NAME' already exists!"
+    exit 2
+fi
+
+echo "> Which RTOS, FreeRTOS or ChibiOS?"
+read RTOS
+
+RTOS=$(echo $RTOS | awk '{print toupper($0)}')
+if [ -z "$RTOS" ]; then
+    echo "RTOS is mandatory!"
+    exit 1
+fi
+if [[ "$RTOS" != "FREERTOS" && "$RTOS" != "CHIBIOS" ]]; then
+    echo "You must provide or FreeRTOS or ChibiOS!"
+    exit 1
+fi
+
+
+mkdir "$NAME"
+pushd "$NAME" > /dev/null
+
+git init
+git submodule add git@github.com:devanlai/dapboot.git          lib/dapboot
+git submodule add --depth 500 git@github.com:0x3333/chibios_svn_mirror.git lib/chibios
+git submodule add git@github.com:0x3333/opus.git               lib/opus
+git submodule add --depth 500 git@github.com:0x3333/FreeRTOS-Kernel.git    lib/freertos
+git submodule init
+git submodule update
+
+cat <<EOF > .gitignore
+out
+.dep
+EOF
+ln -s lib/opus/Makefile Makefile
+
+mkdir "app"
+cp -R lib/opus/template/app.mk lib/opus/template/src lib/opus/template/inc app/
+cp -R lib/opus/res/.vscode .
+
+if [ "$RTOS" == "FREERTOS" ]; then
+    TMP_APP_MK=$(mktemp)
+    cp app/app.mk $TMP_APP_MK
+    sed 's/OP_RTOS_FREERTOS = .*$/OP_RTOS_FREERTOS = 1/; s/OP_RTOS_CHIBIOSRT = .*$/OP_RTOS_CHIBIOSRT = 0/' $TMP_APP_MK > app/app.mk
+    rm $TMP_APP_MK
+fi
+if [ "$RTOS" == "CHIBIOS" ]; then
+    TMP_APP_MK=$(mktemp)
+    cp app/app.mk $TMP_APP_MK
+    sed 's/OP_RTOS_FREERTOS = .*$/OP_RTOS_FREERTOS = 0/; s/OP_RTOS_CHIBIOSRT = .*$/OP_RTOS_CHIBIOSRT = 1/' $TMP_APP_MK > app/app.mk
+    rm $TMP_APP_MK
+fi
+
+git add --all
+
+popd > /dev/null
+
+echo -e "\nProject created successfully!"
+echo -e "\n\nYou must provide a environment variable GCCARM_HOME point to GCC ARM toolchain folder."
+exit 0

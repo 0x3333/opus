@@ -1,0 +1,67 @@
+{
+    "version": 4,
+    "configurations": [
+        {
+            "name": "OpusFramework",
+            "defines": [
+            ],
+            "compilerPath": "${env:GCCARM_HOME}/bin/arm-none-eabi-gcc",
+            "cStandard": "c99",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "gcc-x64",
+            "includePath": [
+                "${workspaceFolder}/app/**",
+
+                "${workspaceFolder}/lib/opus/**",
+
+                "${workspaceFolder}/lib/chibios/os/hal/osal/freertos/**",
+
+                "${workspaceFolder}/lib/freertos",
+                "${workspaceFolder}/lib/freertos/include/**",
+                "${workspaceFolder}/lib/freertos/portable/GCC/ARM_CM3/**",
+
+                "${workspaceFolder}/lib/chibios/os/rt/**",
+                "${workspaceFolder}/lib/chibios/os/oslib/**",
+
+                "${workspaceFolder}/lib/chibios/os/hal/include",
+                "${workspaceFolder}/lib/chibios/os/hal/osal/rt-nil",
+                "${workspaceFolder}/lib/chibios/os/hal/ports/common/ARMCMx",
+                "${workspaceFolder}/lib/chibios/os/hal/ports/STM32/STM32F1xx",
+                "${workspaceFolder}/lib/chibios/os/hal/boards/STM32F103C8_MINIMAL",
+                "${workspaceFolder}/lib/chibios/os/hal/ports/STM32/STM32F1xx",
+                "${workspaceFolder}/lib/chibios/os/hal/ports/STM32/LLD/CANv1",
+                "${workspaceFolder}/lib/chibios/os/hal/ports/STM32/LLD/DACv1",
+                "${workspaceFolder}/lib/chibios/os/hal/ports/STM32/LLD/DMAv1",
+                "${workspaceFolder}/lib/chibios/os/hal/ports/STM32/LLD/GPIOv1",
+                "${workspaceFolder}/lib/chibios/os/hal/ports/STM32/LLD/I2Cv1",
+                "${workspaceFolder}/lib/chibios/os/hal/ports/STM32/LLD/RTCv1",
+                "${workspaceFolder}/lib/chibios/os/hal/ports/STM32/LLD/SDIOv1",
+                "${workspaceFolder}/lib/chibios/os/hal/ports/STM32/LLD/SPIv1",
+                "${workspaceFolder}/lib/chibios/os/hal/ports/STM32/LLD/TIMv1",
+                "${workspaceFolder}/lib/chibios/os/hal/ports/STM32/LLD/USARTv1",
+                "${workspaceFolder}/lib/chibios/os/hal/ports/STM32/LLD/USBv1",
+                "${workspaceFolder}/lib/chibios/os/hal/ports/STM32/LLD/xWDGv1",
+
+                "${workspaceFolder}/lib/chibios/os/license",
+                "${workspaceFolder}/lib/chibios/os/hal/lib/streams",
+                "${workspaceFolder}/lib/chibios/os/hal/lib/complex/mfs",
+                "${workspaceFolder}/lib/chibios/os/hal/lib/complex/soft_serial",
+
+                "${workspaceFolder}/lib/chibios/os/common/ports/ARMCMx",
+                "${workspaceFolder}/lib/chibios/os/common/ports/ARMCMx/compilers/GCC",
+
+                "${workspaceFolder}/lib/chibios/os/common/portability/GCC",
+
+                "${workspaceFolder}/lib/chibios/os/common/startup/ARMCMx/compilers/GCC",
+                "${workspaceFolder}/lib/chibios/os/common/startup/ARMCMx/devices/STM32F1xx",
+
+                "${workspaceFolder}/lib/chibios/os/common/ext/ARM/CMSIS/Core/Include",
+                "${workspaceFolder}/lib/chibios/os/common/ext/ST/STM32F1xx",
+
+                "${env:GCCARM_HOME}/lib/gcc/arm-none-eabi/8.2.1/include",
+                "${env:GCCARM_HOME}/lib/gcc/arm-none-eabi/8.2.1/include-fixed",
+                "${env:GCCARM_HOME}/arm-none-eabi/include"
+            ]
+        }
+    ]
+}

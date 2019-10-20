@@ -1,0 +1,15 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "BMP Debug",
+            "cwd": "${workspaceRoot}",
+            "executable": "./out/${workspaceFolderBasename}.elf",
+            "request": "launch",
+            "type": "cortex-debug",
+            "device": "STM32F103C8T6",
+            "servertype": "bmp",
+            "BMPGDBSerialPort": "${env:BMP_PORT}"
+        }
+    ]
+}
