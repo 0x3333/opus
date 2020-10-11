@@ -54,13 +54,13 @@
 // Idle Hook
 // #define OP_IDLE_HOOK
 
-// Watchdog LED
-#define OP_WATCHDOG_LED
-#define OP_WATCHDOG_LED_DELAY /*       */ 500
+// Heartbeat LED
+#define OP_HEARTBEAT_LED
+#define OP_HEARTBEAT_LED_DELAY /*       */ 500
 #if OP_BOARD == OP_BOARD_BLUEPILL
-#define OP_WATCHDOG_LED_LINE /*        */ PAL_LINE(GPIOC, 13)
+#define OP_HEARTBEAT_LED_LINE /*        */ PAL_LINE(GPIOC, 13)
 #elif OP_BOARD == OP_BOARD_COREBOARD
-#define OP_WATCHDOG_LED_LINE /*        */ PAL_LINE(GPIOA, 1)
+#define OP_HEARTBEAT_LED_LINE /*        */ PAL_LINE(GPIOA, 1)
 #endif
 
 // Hardware Serial Driver

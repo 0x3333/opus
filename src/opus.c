@@ -33,7 +33,7 @@
 // Definitions
 // =================================================================================================
 
-#define WATCHDOG_THREAD_STACK_SIZE 64
+#define HEARTBEAT_THREAD_STACK_SIZE 64
 
 // =================================================================================================
 // External Declarations
@@ -50,8 +50,8 @@ extern void appMain(void); // User Application Entrypoint
 // Local Variables / Types
 // =================================================================================================
 
-#ifdef OP_WATCHDOG_LED
-THD_WORKING_AREA(WatchdogLedWA, WATCHDOG_THREAD_STACK_SIZE);
+#ifdef OP_HEARTBEAT_LED
+THD_WORKING_AREA(HeartbeatLedWA, HEARTBEAT_THREAD_STACK_SIZE);
 #endif
 
 // =================================================================================================
@@ -60,20 +60,20 @@ THD_WORKING_AREA(WatchdogLedWA, WATCHDOG_THREAD_STACK_SIZE);
 
 static void mainInit(void)
 {
-    palSetLineMode(OP_WATCHDOG_LED_LINE, PAL_MODE_OUTPUT_OPENDRAIN);
-    palClearLine(OP_WATCHDOG_LED_LINE);
+    palSetLineMode(OP_HEARTBEAT_LED_LINE, PAL_MODE_OUTPUT_OPENDRAIN);
+    palClearLine(OP_HEARTBEAT_LED_LINE);
 }
 
-#ifdef OP_WATCHDOG_LED
-THD_FUNCTION(WatchdogLed, pvParameters)
+#ifdef OP_HEARTBEAT_LED
+THD_FUNCTION(HeartbeatLed, pvParameters)
 {
     UNUSED(pvParameters);
 
     while (1)
     {
-        // Blink Watchdog Onboard Led
-        palToggleLine(OP_WATCHDOG_LED_LINE);
-        osalThreadSleepMilliseconds(OP_WATCHDOG_LED_DELAY);
+        // Blink Heartbeat Onboard Led
+        palToggleLine(OP_HEARTBEAT_LED_LINE);
+        osalThreadSleepMilliseconds(OP_HEARTBEAT_LED_DELAY);
     }
 }
 #endif
@@ -112,8 +112,8 @@ int main(void)
     // User Application EntryPoint
     appMain();
 
-#ifdef OP_WATCHDOG_LED
-    THD_CREATE_STATIC(WatchdogLed, WatchdogLedWA, WATCHDOG_THREAD_STACK_SIZE, "WDLED", NULL, MIN_PRIORITY);
+#ifdef OP_HEARTBEAT_LED
+    THD_CREATE_STATIC(HeartbeatLed, HeartbeatLedWA, HEARTBEAT_THREAD_STACK_SIZE, "WDLED", NULL, MIN_PRIORITY);
 #endif
 
 #if defined(OP_RTOS_FREERTOS) && OP_RTOS_FREERTOS == 1
