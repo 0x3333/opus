@@ -72,7 +72,6 @@ THD_FUNCTION(WatchdogLed, pvParameters)
     while (1)
     {
         // Blink Watchdog Onboard Led
-        DEBUG(NL("."));
         palToggleLine(OP_WATCHDOG_LED_LINE);
         osalThreadSleepMilliseconds(OP_WATCHDOG_LED_DELAY);
     }
@@ -151,3 +150,4 @@ void vApplicationStackOverflowHook(TaskHandle_t xTask, char *pcTaskName)
         ;
 }
 #endif
+
