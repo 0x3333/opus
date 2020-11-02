@@ -77,7 +77,7 @@
 #define DEBUG(...) /*                        */ chprintf((BaseSequentialStream *)&OP_DEBUG_DRIVER, __VA_ARGS__);
 #endif
 
-#define DEBUG_FUNC() /*                      */ DEBUG("%s:%d:%s\n\r", __FILE__, __LINE__, __func__)
+#define DEBUG_FUNC() /*                      */ DEBUG("%s:%d:%s\r\n", __FILE__, __LINE__, __func__)
 #define DEBUG_BYTE(prefix, bt, suffix) /*    */ DEBUG(prefix BYTE_TO_BINARY_PATTERN suffix, \
                                                       BYTE_TO_BINARY(bt))
 #define DEBUG_WORD(prefix, bt, suffix) /*    */ DEBUG(prefix BYTE_TO_BINARY_PATTERN " " BYTE_TO_BINARY_PATTERN suffix, \

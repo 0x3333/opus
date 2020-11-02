@@ -106,7 +106,7 @@ You have some macros available to help with some common tasks.
 #### Strings
 
 * `STRINGIFY`: Resolve a define to a quoted string. (If undefined, the name of the define.).
-* `NL`: Will append `\n\r` to the provided parameter, ie. `DEBUG(NL("Thread started..."));`
+* `NL`: Will append `\r\n` to the provided parameter, ie. `DEBUG(NL("Thread started..."));`
 * `FORCE_INLINE`: Will force function to be inlined.
 * `UNUSED`: To avoid warnings about unused parameters while compiling.
 

@@ -47,8 +47,8 @@
 #define STRINGIFY_(M) /*                     */ #M
 #define STRINGIFY(M) /*                      */ STRINGIFY_(M)
 
-// Terminate a String with \n\r
-#define NL(s) /*                             */ "" s "\n\r"
+// Terminate a String with \r\n
+#define NL(s) /*                             */ "" s "\r\n"
 
 // =================================================================================================
 // External Declarations
