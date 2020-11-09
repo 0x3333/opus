@@ -62,6 +62,9 @@
                       twa##Stack,    /* Array to use as the task's stack           */ \
                       &twa##Buffer); /* Variable to hold the task's data structure */
 
+// Return thread name
+#define THREAD_ID() /*                */ xGetCurrentTaskHandle()->pcTaskName
+
 #elif defined(OP_RTOS_CHIBIOSRT) && OP_RTOS_CHIBIOSRT == 1
 // Minimum priority for a Thread
 #define MIN_PRIORITY /*               */ LOWPRIO
@@ -69,15 +72,21 @@
 #define MAX_PRIORITY /*               */ HIGHPRIO
 
 // Static Thread creating helper, to be used with THD_WORKING_AREA and THD_FUNCTION macros
-#define THD_CREATE_STATIC(tname, twa, tsize, tlabel, param, tprio)                         \
-    {                                                                                      \
-        thread_t *staticThread = chThdCreateStatic(twa,         /* Thread Stack         */ \
-                                                   sizeof(twa), /* Thread Stack Size    */ \
-                                                   tprio,       /* Priority             */ \
-                                                   tname,       /* Thread Function      */ \
-                                                   param);      /* Parameters           */ \
-        chRegSetThreadNameX(staticThread, tlabel);              /* Thread Label         */ \
+#define THD_CREATE_STATIC(_funcp, _wbase, _tsize, _name, _arg, _prio)                     \
+    {                                                                                     \
+        thread_descriptor_t td = {                                                        \
+            .name  = _name,                                    /* Thread Label         */ \
+            .wbase = _wbase,                                   /* Thread Stack         */ \
+            .wend  = THD_WORKING_AREA_END(_wbase),             /* Thread Stack Size    */ \
+            .prio  = _prio,                                    /* Priority             */ \
+            .funcp = _funcp,                                   /* Thread Function      */ \
+            .arg   = _arg                                      /* Argument             */ \
+        };                                                                                \
+        chThdStartI(chThdCreateSuspendedI(&td));                                          \
     }
+
+// Return thread name
+#define THREAD_ID() /*                */ chRegGetThreadNameX(chThdGetSelfX())
 #endif
 
 // =================================================================================================

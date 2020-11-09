@@ -21,31 +21,24 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-#ifndef _DRIVER_H
-#define _DRIVER_H
+#ifndef _LOGGER_H
+#define _LOGGER_H
 
 // =================================================================================================
 // Includes
 // =================================================================================================
 
-// FreeRTOS
-#if defined(OP_RTOS_FREERTOS) && OP_RTOS_FREERTOS == 1
-#include "FreeRTOS.h"
-#endif
-// ChibiOS RT
-#if defined(OP_RTOS_CHIBIOSRT) && OP_RTOS_CHIBIOSRT == 1
-#include "ch.h"
-#endif
-
+#ifdef OP_LOGGER
 // ChibiOS
 #include "hal.h"
 #include "chprintf.h"
 
 // Opus
-#include "debug.h"
-#include "logger.h"
 #include "types.h"
-#include "macros.h"
+#ifdef _USB_SERIAL
+#include "usbcdc.h"
+#endif
+#endif
 
 // =================================================================================================
 // Definitions
@@ -59,8 +52,22 @@
 // Macros
 // =================================================================================================
 
+#ifdef OP_LOGGER
+
+#define LOG(...) /*                        */ chprintf((BaseSequentialStream *)&OP_LOGGER_DRIVER, __VA_ARGS__);
+#define LOG_FUNC() /*                      */ DEBUG("%s:%d:%s\r\n", __FILE__, __LINE__, __func__)
+#define LOG_T(fmt, ...) /*                      */ LOG("[%s] " fmt, THREAD_ID(), ##__VA_ARGS__)
+
+#else
+
+#define LOG(...)
+#define LOG_FUNC()
+#define THREAD_ID()
+
+#endif /* OP_LOGGER */
+
 // =================================================================================================
 // External Declarations
 // =================================================================================================
 
-#endif /* _DRIVER_H */
+#endif /* _LOGGER_H */

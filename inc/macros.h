@@ -50,6 +50,27 @@
 // Terminate a String with \r\n
 #define NL(s) /*                             */ "" s "\r\n"
 
+#define BYTE_TO_BINARY_PATTERN /*            */ "%c%c%c%c %c%c%c%c"
+#define BYTE_TO_BINARY(byte) /*              */ ((byte)&b10000000 ? '1' : '0'), \
+                                                ((byte)&b01000000 ? '1' : '0'), \
+                                                ((byte)&b00100000 ? '1' : '0'), \
+                                                ((byte)&b00010000 ? '1' : '0'), \
+                                                ((byte)&b00001000 ? '1' : '0'), \
+                                                ((byte)&b00000100 ? '1' : '0'), \
+                                                ((byte)&b00000010 ? '1' : '0'), \
+                                                ((byte)&b00000001 ? '1' : '0')
+
+#define PRINT_FUNC /*                        */ "%s:%d:%s\r\n", __FILE__, __LINE__, __func__
+#define PRINT_BYTE(prefix, bt, suffix) /*    */ prefix BYTE_TO_BINARY_PATTERN suffix, \
+                                                           BYTE_TO_BINARY(bt)
+#define PRINT_WORD(prefix, bt, suffix) /*    */ prefix BYTE_TO_BINARY_PATTERN " " BYTE_TO_BINARY_PATTERN suffix, \
+                                                           BYTE_TO_BINARY(bt >> 8), BYTE_TO_BINARY(bt)
+#define PRINT_DWORD(prefix, bt, suffix) /*   */ prefix BYTE_TO_BINARY_PATTERN " " BYTE_TO_BINARY_PATTERN " " BYTE_TO_BINARY_PATTERN " " BYTE_TO_BINARY_PATTERN suffix, \
+                                                           BYTE_TO_BINARY(bt >> 24),                                                                                              \
+                                                           BYTE_TO_BINARY(bt >> 16),                                                                                              \
+                                                           BYTE_TO_BINARY(bt >> 8),                                                                                               \
+                                                           BYTE_TO_BINARY(bt)
+
 // =================================================================================================
 // External Declarations
 // =================================================================================================

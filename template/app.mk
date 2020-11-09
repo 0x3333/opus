@@ -37,16 +37,23 @@ endif
 #
 # Application Definitions
 #
+
+# If float support is required
+#APPDEFS += -DCHPRINTF_USE_FLOAT=TRUE
+
 # Debug/Release Build, comment to release build
-APPDEFS += -DOP_DEBUG
-# Debug Serial Driver
-APPDEFS += -DOP_DEBUG_DRIVER=SD1
+# APPDEFS += -DOP_DEBUG
+# APPDEFS += -DOP_DEBUG_DRIVER=SD1
+
+# Logger support
+APPDEFS += -DOP_LOGGER
+APPDEFS += -DOP_LOGGER_DRIVER=SD1
 
 #
 # RTOS
 #
-OP_RTOS_FREERTOS = 1
-OP_RTOS_CHIBIOSRT = 0
+OP_RTOS_FREERTOS = 0
+OP_RTOS_CHIBIOSRT = 1
 
 #
 # Bootloader App base address
