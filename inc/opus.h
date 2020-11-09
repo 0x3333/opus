@@ -82,7 +82,7 @@
             .funcp = _funcp,                                   /* Thread Function      */ \
             .arg   = _arg                                      /* Argument             */ \
         };                                                                                \
-        chThdStartI(chThdCreateSuspendedI(&td));                                          \
+        chThdStart(chThdCreateSuspended(&td));                                            \
     }
 
 // Return thread name
