@@ -1,8 +1,14 @@
 # Opus Framework
 
-This framework was created initially to easily bootstrap a ChibiOS project for STM32F103 boards, later, I needed to add FreeRTOS as the OS while still using the ChibiOS HAL, now this project is the sum up of these 2 technologies. You can use FreeRTOS or ChibiOS-RT as RT. Note that it is focused on STM32F103 boards, but Cortex M0 and M3 are probably compatible(FreeRTOS kernel has been modified for these 2 architectures). Modifying it to work on other boards/CPUs are pretty easy though.
+----
 
-I also added [`dapboot`](https://github.com/devanlai/dapboot) support as USB DFU bootloader.
+### Project archived, I have no time to continue this project, there is plenty of options nowadays.
+
+----
+
+This framework was created initially to quickly bootstrap a ChibiOS project for STM32F103 boards, later, I needed to add FreeRTOS as the OS while still using the ChibiOS HAL, now this project is the sum up of these 2 technologies. You can use FreeRTOS or ChibiOS-RT as RT. It is focused on STM32F103 boards, but Cortex M0 and M3 are probably compatible(FreeRTOS kernel has been modified for these 2 architectures). Modifying it to work on other boards/CPUs is pretty easy though.
+
+I also added [`dapboot`](https://github.com/devanlai/dapboot) support as a USB DFU bootloader.
 
 ***Note:*** I'm using custom repos for [ChibiOS](https://github.com/0x3333/chibios_svn_mirror) and [FreeRTOS](https://github.com/0x3333/FreeRTOS-Kernel), in the ChibiOS I added some drivers and FreeRTOS support, and in the FreeRTOS I added support for ChibiOS OSAL.
 
@@ -21,9 +27,9 @@ While ChibiOS HAL is easy to use, you have to configure the drivers, and sometim
 
 `bash <(curl -Ss https://raw.githubusercontent.com/0x3333/opus/master/res/create)`
 
-It will ask for a project name and which RTOS to use(FreeRTOS or ChibiOS-RT), a folder with the project name will be created.
+It will ask for a project name and which RTOS to use(FreeRTOS or ChibiOS-RT), and a folder with the project name will be created.
 
-***Note:*** As the ChibiOS and FreeRTOS repos are really big, I'm using git shallow clone to reduce the history to the last 500 revisions. You can increase depth using `git fetch --depth=DESIRED_DEPTH` or `git fetch --unshallow` to unshallow the repo.
+***Note:*** As the ChibiOS and FreeRTOS repos are quite big, I'm using git shallow clone to reduce the history to the last 500 revisions. You can increase depth using `git fetch --depth=DESIRED_DEPTH` or `git fetch --unshallow` to unshallow the repo.
 
 ### Folder organization
 
@@ -46,8 +52,8 @@ It will ask for a project name and which RTOS to use(FreeRTOS or ChibiOS-RT), a 
 ```
 
 * `app` folder contains your project source code.
-* `lib` folder contains all libraries used in your project, like `FreeRTOS`, `ChibiOS` and `dapboot`. They are configured using git submodules.
-* `out` folder contains build generated files, including your `ELF` file.
+* `lib` folder contains all libraries used in your project, like `FreeRTOS`, `ChibiOS`, and `dapboot`. They are configured using git submodules.
+* `out` folder contains build-generated files, including your `ELF` file.
 * `app.mk` file is included in the Makefile and can be used to customize the build. Also, you can provide command-line variables to the make command to customize the build, more on [Building](#Building) section. You can change your RTOS of choice too.
 
 ### Configuration
@@ -78,15 +84,15 @@ The BMP programmer/debugger can be used by exporting `PROGRAMMER=BMP`. You also 
 
 #### OOCD/STLINK
 
-To use the STLINK probe you must export `PROGRAMMER=STLINK` and provide the OOCD folder with `OOCD_HOME=/home/user/gnu-mcu-eclipse/openocd/latest`. You also have to configure the interface and the target, these two can be configured exporting `OOCD_INTERFACE` and `OOCD_TARGET`, they already have default values on `app.mk` file.
+To use the STLINK probe you must export `PROGRAMMER=STLINK` and provide the OOCD folder with `OOCD_HOME=/home/user/gnu-mcu-eclipse/openocd/latest`. You also have to configure the interface and the target, these two can be configured by exporting `OOCD_INTERFACE` and `OOCD_TARGET`, they already have default values on `app.mk` file.
 
 #### USB DFU Bootloader
 
-Opus Framework includes the `dapboot` USB DFU bootloader. You can upload firmware using it instead of an external programer or JTAG probe.
+Opus Framework includes the `dapboot` USB DFU bootloader. You can upload the firmware using it instead of an external programmer or JTAG probe.
 
 To use the bootloader, export `PROGRAMMER=BOOTLOADER`.
 
-To keep make the bootloader wait after powering up, the easiest way is to configure an I/O as a `BUTTON`, then you can easily upload your code.
+To keep making the bootloader wait after powering up, the easiest way is to configure an I/O as a `BUTTON`, then you can easily upload your code.
 
 To build the bootloader, use the `make boot`. Options you can provide(See `app.mk` for examples):
 
@@ -114,14 +120,14 @@ You have some macros available to help with some common tasks.
 
 You can debug your code using a BMP probe using Visual Studio Code. The project already has a configuration for this purpose.
 
-You can also debug using serial port using these macros:
+You can also debug using a serial port using these macros:
 
 * `DEBUG(fmt, va_args)`: Same as printf signature.
 * `DEBUG_FUNC()`: Will print the file, line, and function name.
 * `DEBUG_BYTE(prefix, bit, suffix)`: Will print every bit in the provided byte(8 bits).
 * `DEBUG_WORD(prefix, bit, suffix)`: Will print every bit in the provided word(16 bits).
 * `DEBUG_DWORD(prefix, bit, suffix)`: Will print every bit in the provided byte(32 bits).
-* `FIX_FOR_RELEASE(stmt)`: Accept a statement as parameter and will print an error when building for release(`OP_DEBUG` not defined), ie. `FIX_FOR_RELEASE(TIMER->SR = 0);`.
+* `FIX_FOR_RELEASE(stmt)`: Accept a statement as a parameter and will print an error when building for release(`OP_DEBUG` not defined), ie. `FIX_FOR_RELEASE(TIMER->SR = 0);`.
 ---
 
 Notes:
